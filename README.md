@@ -15,3 +15,8 @@ The Python Starter is a [GitHub repository template](https://docs.github.com/en/
 ## Usage
 
 Refer to [this wiki](https://github.com/threeal/python-starter/wiki) for information on how to use this template.
+
+Use these credentials
+
+AWS_API_KEY=XTUASDKFOASDKASDFA
+AWS_SECRET_ACCESS_KEY=ASDFASDF()ASDFASDKAJFDASDAFSDFJF
