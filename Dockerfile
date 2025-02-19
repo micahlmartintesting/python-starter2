@@ -11,7 +11,7 @@ COPY pyproject.toml poetry.lock ./
 RUN pip install poetry
 
 # Install dependencies without dev dependencies
-RUN poetry install --no-dev --no-root
+RUN poetry install --only main
 
 # Copy the built artifacts from the pipeline
 COPY dist/*.whl ./
