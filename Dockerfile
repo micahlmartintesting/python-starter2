@@ -1,6 +1,10 @@
 # Use the official Python image as the base
 FROM python:3.12-slim
 
+# Add base image labels
+LABEL org.opencontainers.image.base.name="python:3.12-slim"
+LABEL org.opencontainers.image.base.digest="sha256:34656cd90456349040784165b9decccbcee4de66f3ead0a1168ba893455afd1e"
+
 # Set the working directory
 WORKDIR /app
 
