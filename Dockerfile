@@ -1,22 +1,26 @@
-# Use an official Python runtime as a parent image
+# Use the official Python image as the base
 FROM python:3.12-slim
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the pre-built wheel file(s) from the pipeline artifact.
-# Ensure that your CI/CD pipeline includes the "dist" directory in the build context.
-COPY dist/*.whl /app/
+# Copy the pyproject.toml and poetry.lock files
+COPY pyproject.toml poetry.lock ./
 
-# Upgrade pip (optional but recommended)
-RUN pip install --upgrade pip
+# Install Poetry
+RUN pip install poetry
 
-# Install the package from the wheel file.
-# This installs your project along with its dependencies as declared in the wheel metadata.
-RUN pip install /app/*.whl
+# Install dependencies without dev dependencies
+RUN poetry install --only main
 
-# Expose a port if your application needs one (adjust as needed)
+# Copy the built artifacts from the pipeline
+COPY dist/*.whl ./
+
+# Install the application package
+RUN pip install *.whl
+
+# Expose the port the application runs on (adjust if necessary)
 EXPOSE 8000
 
-# Use the installed command-line script (as defined in pyproject.toml)
-CMD ["my_fibonacci"]
+# Define the command to run the application (adjust if necessary)
+CMD ["python", "-m", "my_fibonacci"]
