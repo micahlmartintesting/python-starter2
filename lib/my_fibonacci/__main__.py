@@ -1,15 +1,10 @@
-"""An example main Python module."""
+"""Main entry point for the Fibonacci web server."""
 
-import sys
+import uvicorn
 
-from . import fibonacci_sequence
-
-
-def main() -> None:
-    """Print a Fibonacci sequence based on user input."""
-    sequence = fibonacci_sequence(int(sys.argv[1]))
-    print(" ".join(str(item) for item in sequence))
-
+def main():
+    """Start the FastAPI server."""
+    uvicorn.run("my_fibonacci.app:app", host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
     main()

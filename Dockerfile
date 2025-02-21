@@ -23,8 +23,8 @@ COPY dist/*.whl ./
 # Install the application package
 RUN pip install *.whl
 
-# Expose the port the application runs on (adjust if necessary)
+# Expose the port the application runs on
 EXPOSE 8000
 
-# Define the command to run the application (adjust if necessary)
-CMD ["python", "-m", "my_fibonacci", "10"]
+# Run the FastAPI server
+CMD ["python", "-m", "my_fibonacci"]
