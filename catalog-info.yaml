@@ -1,0 +1,89 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: python-starter
+  description: A starter python module for generating a Fibonacci sequence
+  annotations:
+    github.com/project-slug: threeal/python-starter
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - python
+    - fastapi
+    - fibonacci
+    - starter
+  links:
+    - url: https://github.com/threeal/python-starter
+      title: Source Code
+      icon: github
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user:default/threeal
+  system: python-services
+  providesApis:
+    - fibonacci-api
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: fibonacci-api
+  description: REST API for Fibonacci sequence generation
+  tags:
+    - rest
+    - fibonacci
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: user:default/threeal
+  definition:
+    $text: |
+      openapi: 3.0.0
+      info:
+        title: Fibonacci Generator
+        version: 1.0.0
+        description: API for generating Fibonacci sequence numbers
+      paths:
+        /generate:
+          get:
+            summary: Generate next Fibonacci number
+            responses:
+              '200':
+                description: Next number in sequence
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        number:
+                          type: integer
+        /health/live:
+          get:
+            summary: Liveness probe
+            responses:
+              '200':
+                description: Application health status
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                        details:
+                          type: object
+        /health/ready:
+          get:
+            summary: Readiness probe
+            responses:
+              '200':
+                description: Application readiness status
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                        details:
+                          type: object 
