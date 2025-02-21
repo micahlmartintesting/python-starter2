@@ -5,4 +5,4 @@ image:
 dockercfg: <+artifact.imagePullSecret>
 
 imagePullSecrets:
-  - name: release-<+INFRA_KEY_SHORT_ID>-dockercfg
+  - name: release-<+INFRA_KEY_SHORT_ID>-python-starter-dockercfg
