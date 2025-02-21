@@ -4,6 +4,7 @@ metadata:
   name: {{ include "python-starter.fullname" . }}
   labels:
     {{- include "python-starter.labels" . | nindent 4 }}
+    harness.io/release: {{ .Release.Name }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
