@@ -46,6 +46,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "python-starter.selectorLabels" -}}
+release: {{ .Release.Name }}  
+harness.io/release: {{ .Release.Name }} 
 app.kubernetes.io/name: {{ include "python-starter.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

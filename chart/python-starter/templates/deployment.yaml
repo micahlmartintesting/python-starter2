@@ -4,7 +4,6 @@ metadata:
   name: {{ include "python-starter.fullname" . }}
   labels:
     {{- include "python-starter.labels" . | nindent 4 }}
-    harness.io/release: {{ .Release.Name }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -19,7 +18,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        harness.io/release: {{ .Release.Name }}
         {{- include "python-starter.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
