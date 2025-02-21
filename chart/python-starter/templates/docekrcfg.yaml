@@ -1,0 +1,13 @@
+{{- if .Values.dockercfg }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ include "python-starter.fullname" . }}-dockercfg"
+  namespace: {{.Values.namespace}}
+  annotations:
+    harness.io/skip-versioning: "true"
+data:
+  .dockercfg: {{ .Values.dockercfg }}
+type: kubernetes.io/dockercfg
+{{- end }}
