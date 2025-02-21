@@ -5,4 +5,4 @@ image:
 dockercfg: <+artifact.imagePullSecret>
 
 imagePullSecrets:
-  - name: dockercfg
+  - name: release-<+INFRA_KEY_SHORT_ID>-dockercfg
