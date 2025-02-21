@@ -27,4 +27,4 @@ RUN pip install *.whl
 EXPOSE 8000
 
 # Define the command to run the application (adjust if necessary)
-CMD ["python", "-m", "my_fibonacci"]
+CMD ["python", "-m", "my_fibonacci", "10"]
