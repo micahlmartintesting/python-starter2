@@ -1,9 +1,20 @@
-from my_fibonacci import fibonacci_sequence
+"""Test module for fibonacci sequence."""
+
+import pytest
+import numpy as np
+from my_fibonacci.sequence import fibonacci_sequence
 
 
 def test_fibonacci_sequence() -> None:
-    assert fibonacci_sequence(-1) == []
-    assert fibonacci_sequence(0) == []
-    assert fibonacci_sequence(1) == [1]
-    assert fibonacci_sequence(2) == [1, 1]
-    assert fibonacci_sequence(5) == [1, 1, 2, 3, 5]
+    """Test fibonacci sequence generation."""
+    # Test negative input
+    with pytest.raises(ValueError):
+        fibonacci_sequence(-1)
+
+    # Test empty sequence
+    assert len(fibonacci_sequence(0)) == 0
+
+    # Test sequence values
+    sequence = fibonacci_sequence(5)
+    expected = np.array([0, 1, 1, 2, 3], dtype=int)
+    np.testing.assert_array_equal(sequence, expected)
