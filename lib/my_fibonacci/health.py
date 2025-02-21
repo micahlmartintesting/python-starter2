@@ -3,6 +3,7 @@
 from datetime import datetime
 from typing import Any
 
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 
@@ -14,34 +15,32 @@ class HealthResponse(BaseModel):
 
 
 def get_liveness_response() -> HealthResponse:
-    """Get liveness check response.
+    """
+    Get liveness check response.
 
-    Returns:
-        HealthResponse: Current health status
+    @return: Current health status
+    @rtype: HealthResponse
     """
     return HealthResponse(
-        status="healthy",
-        details={"timestamp": datetime.now().isoformat()}
+        status="healthy", details={"timestamp": datetime.now().isoformat()}
     )
 
 
-def get_readiness_response(state: Any) -> HealthResponse:
-    """Get readiness check response.
+def get_readiness_response(state: FastAPI) -> HealthResponse:
+    """
+    Get readiness check response.
 
-    Args:
-        state: Application state to check
-
-    Returns:
-        HealthResponse: Current readiness status
+    @param state: FastAPI application state
+    @type state: FastAPI
+    @return: Current readiness status
+    @rtype: HealthResponse
     """
     checks = {
         "state_initialized": hasattr(state, "fibonacci"),
         "sequence_available": (
-            hasattr(state, "fibonacci") and 
-            len(state.fibonacci.sequence) > 0
-        )
+            hasattr(state, "fibonacci") and len(state.fibonacci.sequence) > 0
+        ),
     }
     return HealthResponse(
-        status="ready" if all(checks.values()) else "not_ready",
-        details=checks
-    ) 
+        status="ready" if all(checks.values()) else "not_ready", details=checks
+    )

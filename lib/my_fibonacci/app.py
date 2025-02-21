@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from numpy import ndarray
 
 from .health import HealthResponse, get_liveness_response, get_readiness_response
+from .models import State
 from .sequence import (
     INITIAL_SEQUENCE_LENGTH,
     SEQUENCE_EXTENSION_SIZE,
@@ -15,35 +16,28 @@ from .sequence import (
 app = FastAPI(title="Fibonacci Generator")
 
 
-class State:
-    """Application state for maintaining fibonacci sequence."""
-
-    def __init__(self) -> None:
-        """Initialize state with pre-generated sequence."""
-        self.sequence: ndarray = fibonacci_sequence(INITIAL_SEQUENCE_LENGTH)
-        self.current_index: int = 0
-
-
 # Initialize app state
 app.state.fibonacci = State()
 
 
 @app.get("/health/live", response_model=HealthResponse)
 async def liveness() -> HealthResponse:
-    """Check if the application is alive.
+    """
+    Check if the application is alive.
 
-    Returns:
-        HealthResponse: Current health status
+    @return: Current health status
+    @rtype: HealthResponse
     """
     return get_liveness_response()
 
 
 @app.get("/health/ready", response_model=HealthResponse)
 async def readiness() -> HealthResponse:
-    """Check if the application is ready to handle requests.
+    """
+    Check if the application is ready to handle requests.
 
-    Returns:
-        HealthResponse: Current readiness status
+    @return: Current readiness status
+    @rtype: HealthResponse
     """
     return get_readiness_response(app.state)
 
@@ -53,8 +47,8 @@ async def generate() -> dict[str, int]:
     """
     Generate next number in Fibonacci sequence.
 
-    :returns: Dictionary containing the next Fibonacci number
-    :rtype: dict[str, int]
+    @return: Dictionary containing the next Fibonacci number
+    @rtype: dict[str, int]
     """
     current_length = len(app.state.fibonacci.sequence)
     if app.state.fibonacci.current_index >= current_length:
