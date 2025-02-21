@@ -60,7 +60,7 @@ omit = ["__main__.py"]
 
 [tool.ruff.lint]
 select = ["E", "W", "C90", "I", "N", "D", "UP", "ANN", "S", "B", "A", "C4", "ICN", "INP", "PIE", "PT", "Q", "RET", "SIM", "ARG", "ERA", "PL", "PERF"]
-ignore = ["D211", "D212", "S104"]
+ignore = ["D211", "D212", "S104", "D203"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D", "S101"]

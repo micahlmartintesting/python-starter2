@@ -7,6 +7,7 @@ from numpy import ndarray
 INITIAL_SEQUENCE_LENGTH = 100
 SEQUENCE_EXTENSION_SIZE = 100
 
+
 def fibonacci_sequence(n: int) -> ndarray:
     """
     Generate a Fibonacci sequence of length n.
@@ -27,7 +28,7 @@ def fibonacci_sequence(n: int) -> ndarray:
     if n > 1:
         sequence[1] = 1
         for i in range(2, n):
-            sequence[i] = sequence[i-1] + sequence[i-2]
+            sequence[i] = sequence[i - 1] + sequence[i - 2]
 
     return sequence
 

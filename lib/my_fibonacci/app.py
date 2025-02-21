@@ -15,7 +15,6 @@ app = FastAPI(title="Fibonacci Generator")
 
 
 class State:
-
     """Application state for maintaining fibonacci sequence."""
 
     def __init__(self) -> None:
