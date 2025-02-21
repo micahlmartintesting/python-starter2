@@ -5,6 +5,7 @@ from typing import Any
 from fastapi import FastAPI
 from numpy import ndarray
 
+from .health import HealthResponse, get_liveness_response, get_readiness_response
 from .sequence import (
     INITIAL_SEQUENCE_LENGTH,
     SEQUENCE_EXTENSION_SIZE,
@@ -25,6 +26,26 @@ class State:
 
 # Initialize app state
 app.state.fibonacci = State()
+
+
+@app.get("/health/live", response_model=HealthResponse)
+async def liveness() -> HealthResponse:
+    """Check if the application is alive.
+
+    Returns:
+        HealthResponse: Current health status
+    """
+    return get_liveness_response()
+
+
+@app.get("/health/ready", response_model=HealthResponse)
+async def readiness() -> HealthResponse:
+    """Check if the application is ready to handle requests.
+
+    Returns:
+        HealthResponse: Current readiness status
+    """
+    return get_readiness_response(app.state)
 
 
 @app.get("/generate")
