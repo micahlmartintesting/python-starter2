@@ -1,89 +1,53 @@
-apiVersion: backstage.io/v1alpha1
-kind: Component
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
 metadata:
-  name: python-starter
-  description: A starter python module for generating a Fibonacci sequence
-  annotations:
-    github.com/project-slug: threeal/python-starter
-    backstage.io/techdocs-ref: dir:.
-  tags:
-    - python
-    - fastapi
-    - fibonacci
-    - starter
-  links:
-    - url: https://github.com/threeal/python-starter
-      title: Source Code
-      icon: github
+  name: Workflows-Quickstart
+  title: Create a New GitHub Repository
+  description: Creates a new GitHub Repository 
 spec:
+  owner: service.owner
   type: service
-  lifecycle: experimental
-  owner: user:default/threeal
-  system: python-services
-  providesApis:
-    - fibonacci-api
+  # these are the steps which are rendered in the frontend with the form input
+  parameters:
+    - title: Fill in the repo details
+      required:
+        - github_org_name
+        - github_repo_name
+        - github_username
+      properties:
+        github_org_name:
+          title: GitHub Organization
+          type: string
+          description: Name the org where you want to add the new repository
+        github_repo_name:
+          title: Repository Location
+          type: string
+          description: Name the new repository that you want to create 
+        github_username:
+          title: GitHub Username
+          type: string
+          description: Add Your GitHub Username 
+        token:
+          title: Harness Token
+          type: string
+          ui:widget: password
+          ui:field: HarnessAuthToken       
+  # here's the steps that are executed in series in the scaffolder backend
+  steps:
+    - id: trigger
+      name: Onboarding a New GitHub Repository
+      action: trigger:harness-custom-pipeline
+      input:
+        url: "URL_of_the_Harness_Pipeline_Created_Above"
+        inputset:
+          github_org: ${{ parameters.github_org_name }}
+          github_repo: ${{ parameters.github_repo_name }}
+          github_username: ${{parameters.github_username}}
+        apikey: ${{ parameters.token }}
+    # The final step is to register our new component in the catalog.
 
----
-apiVersion: backstage.io/v1alpha1
-kind: API
-metadata:
-  name: fibonacci-api
-  description: REST API for Fibonacci sequence generation
-  tags:
-    - rest
-    - fibonacci
-spec:
-  type: openapi
-  lifecycle: experimental
-  owner: user:default/threeal
-  definition:
-    $text: |
-      openapi: 3.0.0
-      info:
-        title: Fibonacci Generator
-        version: 1.0.0
-        description: API for generating Fibonacci sequence numbers
-      paths:
-        /generate:
-          get:
-            summary: Generate next Fibonacci number
-            responses:
-              '200':
-                description: Next number in sequence
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        number:
-                          type: integer
-        /health/live:
-          get:
-            summary: Liveness probe
-            responses:
-              '200':
-                description: Application health status
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        status:
-                          type: string
-                        details:
-                          type: object
-        /health/ready:
-          get:
-            summary: Readiness probe
-            responses:
-              '200':
-                description: Application readiness status
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        status:
-                          type: string
-                        details:
-                          type: object 
+  output:
+    links:
+      - title: Pipeline Details
+        url: ${{ steps.trigger.output.PipelineUrl }}
