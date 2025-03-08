@@ -39,7 +39,7 @@ spec:
       name: Onboarding a New GitHub Repository
       action: trigger:harness-custom-pipeline
       input:
-        url: "URL_of_the_Harness_Pipeline_Created_Above"
+        url: "https://hig.harness.io/ng/account/aH01jZkdRnq8q1SqyLVztg/module/idp-admin/orgs/Sandbox/projects/micahtest/pipelines/Create_Repo"
         inputset:
           github_org: ${{ parameters.github_org_name }}
           github_repo: ${{ parameters.github_repo_name }}
